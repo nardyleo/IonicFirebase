@@ -1,14 +1,53 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Aplicação Teste
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
+    <form (ngSubmit)="createLead(event)" [formGroup]="formCreateLead">
+      <ion-list lines= "full">
+        <ion-item>
+          <ion-label position = "stacked">Nome</ion-label>
+          <ion-input required formControlName="nome"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position = "stacked">Email</ion-label>
+          <ion-input required formControlName="email"></ion-input>
+        </ion-item>
+
+      </ion-list>
+      <div class="ion-padding">
+        <ion-button expand="block" type="submit"> Cadastrar </ion-button>
+      </div>
+    </form>
+    
+    <ion-list>
+      <ion-item-sliding *ngFor = "let lead of leads">
+      <ion-item>
+        <ion-label>
+          {{ lead.payload.doc.data().nome }}
+        </ion-label>
+        <ion-note slot="end">
+          {{ lead.payload.doc.data().email }}
+        </ion-note>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click)="completed(lead)">
+          Completou
+        </ion-item-option>
+        <ion-item-option (click)="remove(lead)" color="danger">
+          Remover
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+    </ion-list>
+
   </div>
 </ion-content>
